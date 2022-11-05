@@ -1,18 +1,13 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
-import "TSKArchives.proto";
 import "TSDArchives.proto";
 import "TSSArchives.proto";
 import "TSCHArchives.Common.proto";
-import "TSCHArchives.GEN.proto";
-import "TSCH3DArchives.proto";
-import "TSCHPreUFFArchives.proto";
 package TSCH;
 
 message ChartDrawableArchive {
   optional .TSD.DrawableArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartArchive {
@@ -38,18 +33,9 @@ message ChartArchive {
   repeated .TSP.Reference paragraph_styles = 20;
   optional uint32 multidataset_index = 21;
   optional bool needs_calc_engine_deferred_import_action = 22;
-  extensions 10000 to 536870911;
-  extend .TSCH.ChartDrawableArchive {
-    optional .TSCH.ChartArchive unity = 10000;
-  }
+
 }
 
-message ChartPasteboardAdditionsArchive {
-  extend .TSCH.ChartArchive {
-    optional uint32 preset_index_for_pasteboard = 10000;
-    optional bytes preset_uuid_for_pasteboard = 10001;
-  }
-}
 
 message ChartGridArchive {
   message GridRow {
@@ -82,9 +68,6 @@ message ChartStylePreset {
 
 message ChartPresetsArchive {
   repeated .TSP.Reference chart_presets = 1;
-  extend .TSS.ThemeArchive {
-    optional .TSCH.ChartPresetsArchive extension = 120;
-  }
 }
 
 message PropertyValueStorageContainerArchive {
@@ -142,14 +125,4 @@ message ChartUIState {
   optional int32 cde_last_col_count = 5;
 }
 
-message ChartFormatStructExtensions {
-  extend .TSK.FormatStructArchive {
-    optional string prefix = 10000;
-    optional string suffix = 10001;
-  }
-}
-
-extend .TSCH.ChartArchive {
-  optional bool scene3d_settings_constant_depth = 10002;
-}
 

@@ -1,7 +1,6 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
-import "TSKArchives.proto";
 import "TSDArchives.proto";
 import "TSSArchives.proto";
 import "TSCH3DArchives.proto";
@@ -88,16 +87,16 @@ enum FractionAccuracy {
 
 message SparseReferenceArrayArchive {
   message Entry {
-    required uint32 index = 1;
-    required .TSP.Reference value = 2;
+    optional uint32 index = 1;
+    optional .TSP.Reference value = 2;
   }
-  required uint32 num_entries = 1;
+  optional uint32 num_entries = 1;
   repeated .TSCH.SparseReferenceArrayArchive.Entry entries = 2;
 }
 
 message RectArchive {
-  required .TSP.Point origin = 1;
-  required .TSP.Size size = 2;
+  optional .TSP.Point origin = 1;
+  optional .TSP.Size size = 2;
 }
 
 message ChartsNSNumberDoubleArchive {
@@ -118,41 +117,33 @@ message DEPRECATEDChart3DFillArchive {
 
 message ChartStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartNonStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message LegendStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message LegendNonStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartAxisStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartAxisNonStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartSeriesStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 
 message ChartSeriesNonStyleArchive {
   optional .TSS.StyleArchive super = 1;
-  extensions 10000 to 536870911;
 }
 

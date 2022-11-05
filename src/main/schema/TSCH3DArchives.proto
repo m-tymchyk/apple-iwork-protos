@@ -1,7 +1,6 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
-import "TSDArchives.proto";
 package TSCH;
 
 enum TextureTilingMode {
@@ -60,29 +59,29 @@ message Chart3DFillArchive {
 }
 
 message Chart3DPointLightArchive {
-  required .TSCH.Chart3DVectorArchive position = 1;
+  optional .TSCH.Chart3DVectorArchive position = 1;
 }
 
 message Chart3DDirectionalLightArchive {
-  required .TSCH.Chart3DVectorArchive direction = 1;
+  optional .TSCH.Chart3DVectorArchive direction = 1;
 }
 
 message Chart3DSpotLightArchive {
-  required .TSCH.Chart3DVectorArchive position = 1;
-  required .TSCH.Chart3DVectorArchive direction = 2;
-  required float cutoff = 3;
-  required float dropoff = 4;
+  optional .TSCH.Chart3DVectorArchive position = 1;
+  optional .TSCH.Chart3DVectorArchive direction = 2;
+  optional float cutoff = 3;
+  optional float dropoff = 4;
 }
 
 message Chart3DLightArchive {
-  required string name = 1;
-  required .TSCH.Chart3DVectorArchive ambient_color = 2;
-  required .TSCH.Chart3DVectorArchive diffuse_color = 3;
-  required .TSCH.Chart3DVectorArchive specular_color = 4;
-  required float intensity = 5;
-  required .TSCH.Chart3DVectorArchive attenuation = 6;
-  required uint32 coordinate_space = 7;
-  required bool enabled = 8;
+  optional string name = 1;
+  optional .TSCH.Chart3DVectorArchive ambient_color = 2;
+  optional .TSCH.Chart3DVectorArchive diffuse_color = 3;
+  optional .TSCH.Chart3DVectorArchive specular_color = 4;
+  optional float intensity = 5;
+  optional .TSCH.Chart3DVectorArchive attenuation = 6;
+  optional uint32 coordinate_space = 7;
+  optional bool enabled = 8;
   optional .TSCH.Chart3DPointLightArchive point_light = 9;
   optional .TSCH.Chart3DDirectionalLightArchive directional_light = 10;
   optional .TSCH.Chart3DSpotLightArchive spot_light = 11;
@@ -95,53 +94,53 @@ message Chart3DLightingModelArchive {
 }
 
 message Chart3DLightingPackageArchive {
-  required string name = 1;
+  optional string name = 1;
   repeated .TSCH.Chart3DLightArchive lights = 2;
 }
 
 message Chart3DTexturesMaterialArchive {
-  required .TSCH.Chart3DVectorArchive color = 1;
+  optional .TSCH.Chart3DVectorArchive color = 1;
   repeated .TSCH.Chart3DTSPImageDataTextureArchive textures = 2;
 }
 
 message Chart3DEmissiveMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 2;
 }
 
 message Chart3DDiffuseMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 2;
 }
 
 message Chart3DModulateMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 2;
 }
 
 message Chart3DSpecularMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 2;
 }
 
 message Chart3DShininessMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 2;
 }
 
 message Chart3DEnvironmentMaterialArchive {
-  required .TSCH.Chart3DTexturesMaterialArchive super = 1;
+  optional .TSCH.Chart3DTexturesMaterialArchive super = 1;
   repeated .TSCH.Chart3DBaseImageTextureTilingArchive OBSOLETE_tilings = 2;
   optional bool decalMode = 3;
   repeated .TSCH.Chart3DImageTextureTilingArchive tilings = 4;
 }
 
 message Chart3DFixedFunctionLightingModelArchive {
-  required .TSCH.Chart3DPhongMaterialPackageArchive materials = 1;
+  optional .TSCH.Chart3DPhongMaterialPackageArchive materials = 1;
 }
 
 message Chart3DPhongLightingModelArchive {
-  required .TSCH.Chart3DPhongMaterialPackageArchive materials = 1;
+  optional .TSCH.Chart3DPhongMaterialPackageArchive materials = 1;
 }
 
 message Chart3DPhongMaterialPackageArchive {
@@ -165,7 +164,7 @@ message Chart3DBaseImageTextureTilingArchive {
 }
 
 message Chart3DImageTextureTilingArchive {
-  required .TSCH.Chart3DBaseImageTextureTilingArchive super = 1;
+  optional .TSCH.Chart3DBaseImageTextureTilingArchive super = 1;
   optional .TSCH.TextureTilingMode mode = 2;
   optional .TSCH.TextureTilingWrap wrap = 3;
   optional .TSCH.TextureTilingFace face = 4;
@@ -177,13 +176,10 @@ message Chart3DImageTextureTilingArchive {
 }
 
 message Chart3DVectorArchive {
-  required float x = 1;
-  required float y = 2;
-  required float z = 3;
-  required float w = 4;
+  optional float x = 1;
+  optional float y = 2;
+  optional float z = 3;
+  optional float w = 4;
 }
 
-extend .TSD.FillArchive {
-  optional .TSCH.Chart3DFillArchive fill3d = 100;
-}
 

@@ -1,9 +1,7 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
 import "TSDArchives.proto";
-import "TSKArchives.proto";
-import "TSSArchives.proto";
 import "TSWPArchives.proto";
 package TST;
 
@@ -30,10 +28,10 @@ message CellStylePropertiesArchive {
 }
 
 message Deprecated_StrokePresetDataArchive {
-  required .TST.Deprecated_TableStrokeArchive deprecated_horizontal_stroke = 2;
-  required .TST.Deprecated_TableStrokeArchive deprecated_vertical_stroke = 1;
-  required .TST.Deprecated_TableStrokeArchive deprecated_exterior_stroke = 3;
-  required int32 deprecated_visible_mask = 5;
+  optional .TST.Deprecated_TableStrokeArchive deprecated_horizontal_stroke = 2;
+  optional .TST.Deprecated_TableStrokeArchive deprecated_vertical_stroke = 1;
+  optional .TST.Deprecated_TableStrokeArchive deprecated_exterior_stroke = 3;
+  optional int32 deprecated_visible_mask = 5;
 }
 
 message StrokePresetDataArchive {
@@ -44,7 +42,7 @@ message StrokePresetDataArchive {
 }
 
 message StrokePresetListArchive {
-  required int32 count = 1;
+  optional int32 count = 1;
   repeated .TST.Deprecated_StrokePresetDataArchive deprecated_preset = 2;
   repeated .TST.StrokePresetDataArchive preset = 3;
 }
@@ -103,20 +101,17 @@ message TableStylePropertiesArchive {
 }
 
 message TableStylePresetArchive {
-  required int32 index = 1;
+  optional int32 index = 1;
   optional .TSP.Reference image = 2;
   optional .TSP.Reference style_network = 3;
 }
 
 message TableStrokePresetArchive {
-  required int32 index = 1;
+  optional int32 index = 1;
 }
 
 message ThemePresetsArchive {
   repeated .TSP.Reference table_style_presets = 1;
   repeated .TSP.Reference table_cell_stroke_presets = 2;
-  extend .TSS.ThemeArchive {
-    optional .TST.ThemePresetsArchive extension = 200;
-  }
 }
 

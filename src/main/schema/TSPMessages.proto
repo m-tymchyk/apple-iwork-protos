@@ -1,34 +1,34 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package TSP;
 
 message Reference {
-  required uint64 identifier = 1;
+  optional uint64 identifier = 1;
   optional int32 deprecated_type = 2;
   optional bool deprecated_is_external = 3;
 }
 
 message DataReference {
-  required uint64 identifier = 1;
+  optional uint64 identifier = 1;
 }
 
 message Point {
-  required float x = 1;
-  required float y = 2;
+  optional float x = 1;
+  optional float y = 2;
 }
 
 message Size {
-  required float width = 1;
-  required float height = 2;
+  optional float width = 1;
+  optional float height = 2;
 }
 
 message Range {
-  required uint32 location = 1;
-  required uint32 length = 2;
+  optional uint32 location = 1;
+  optional uint32 length = 2;
 }
 
 message Date {
-  required double seconds = 1;
+  optional double seconds = 1;
 }
 
 message IndexSet {
@@ -37,15 +37,15 @@ message IndexSet {
 
 message Color {
   enum ColorModel {
-    rgb = 1;
+    rgb = 0;
     cmyk = 2;
     white = 3;
   }
-  required .TSP.Color.ColorModel model = 1;
+  optional .TSP.Color.ColorModel model = 1;
   optional float r = 3;
   optional float g = 4;
   optional float b = 5;
-  optional float a = 6 [default = 1];
+  optional float a = 6;
   optional float c = 7;
   optional float m = 8;
   optional float y = 9;
@@ -55,11 +55,11 @@ message Color {
 
 message Path {
   message Element {
-    required .TSP.Path.ElementType type = 1;
+    optional .TSP.Path.ElementType type = 1;
     repeated .TSP.Point points = 2;
   }
   enum ElementType {
-    moveTo = 1;
+    moveTo = 0;
     lineTo = 2;
     quadCurveTo = 3;
     curveTo = 4;
@@ -70,8 +70,8 @@ message Path {
 
 message ReferenceDictionary {
   message Entry {
-    required .TSP.Reference key = 1;
-    required .TSP.Reference value = 2;
+    optional .TSP.Reference key = 1;
+    optional .TSP.Reference value = 2;
   }
   repeated .TSP.ReferenceDictionary.Entry entries = 1;
 }
@@ -84,8 +84,8 @@ message PasteboardObject {
   optional .TSP.Reference wp_storage = 5;
   optional .TSP.Reference guide_storage = 9;
   optional .TSP.Reference app_native_object = 6;
-  optional bool is_text_primary = 7 [default = false];
-  optional bool is_smart = 8 [default = false];
+  optional bool is_text_primary = 7;
+  optional bool is_smart = 8 ;
 }
 
 message ObjectContainer {
