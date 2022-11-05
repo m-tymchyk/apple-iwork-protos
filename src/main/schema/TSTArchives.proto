@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
 import "TSDArchives.proto";
@@ -44,7 +44,7 @@ enum SelectionTypeArchive {
 }
 
 enum FillDirectionArchive {
-  kTSTFillDownArchive = 1;
+  kTSTFillDownArchive = 0;
   kTSTFillUpArchive = 2;
   kTSTFillRightArchive = 3;
   kTSTFillLeftArchive = 4;
@@ -61,60 +61,60 @@ enum HideShowActionArchive {
 }
 
 message CellID {
-  required fixed32 packedData = 1;
+  optional fixed32 packedData = 1;
 }
 
 message TableSize {
-  required fixed32 packedData = 1;
+  optional fixed32 packedData = 1;
 }
 
 message CellRange {
-  required .TST.CellID origin = 1;
-  required .TST.TableSize size = 2;
+  optional .TST.CellID origin = 1;
+  optional .TST.TableSize size = 2;
 }
 
 message TableSelection {
-  required .TST.CellRange cellRange = 1;
-  required .TST.CellRange extendedCellRange = 2;
-  required bool extendedCellRangeValid = 3;
-  required .TST.SelectionTypeArchive selection_type = 4;
+  optional .TST.CellRange cellRange = 1;
+  optional .TST.CellRange extendedCellRange = 2;
+  optional bool extendedCellRangeValid = 3;
+  optional .TST.SelectionTypeArchive selection_type = 4;
 }
 
 message TileRowInfo {
   optional uint32 storage_version = 5;
-  required uint32 tileRowIndex = 1;
-  required uint32 cellCount = 2;
-  required bytes cellStorageBuffer = 3;
-  required bytes cellOffsets = 4;
+  optional uint32 tileRowIndex = 1;
+  optional uint32 cellCount = 2;
+  optional bytes cellStorageBuffer = 3;
+  optional bytes cellOffsets = 4;
 }
 
 message Tile {
-  required uint32 maxColumn = 1;
-  required uint32 maxRow = 2;
-  required uint32 numCells = 3;
-  required uint32 numrows = 4;
+  optional uint32 maxColumn = 1;
+  optional uint32 maxRow = 2;
+  optional uint32 numCells = 3;
+  optional uint32 numrows = 4;
   optional uint32 storage_version = 6;
   repeated .TST.TileRowInfo rowInfos = 5;
 }
 
 message TileStorage {
   message Tile {
-    required uint32 tileid = 1;
-    required .TSP.Reference tile = 2;
+    optional uint32 tileid = 1;
+    optional .TSP.Reference tile = 2;
   }
   repeated .TST.TileStorage.Tile tiles = 1;
 }
 
 message PopUpMenuModel {
   message CellValue {
-    required .TST.PopUpMenuModel.CellValueType cell_value_type = 1;
+    optional .TST.PopUpMenuModel.CellValueType cell_value_type = 1;
     optional .TSCE.BooleanCellValueArchive boolean_value = 2;
     optional .TSCE.DateCellValueArchive date_value = 3;
     optional .TSCE.NumberCellValueArchive number_value = 4;
     optional .TSCE.StringCellValueArchive string_value = 5;
   }
   enum CellValueType {
-    NIL_TYPE = 1;
+    NIL_TYPE = 0;
     BOOLEAN_TYPE = 2;
     DATE_TYPE = 3;
     NUMBER_TYPE = 4;
@@ -126,8 +126,8 @@ message PopUpMenuModel {
 
 message TableDataList {
   message ListEntry {
-    required uint32 key = 1;
-    required uint32 refcount = 2;
+    optional uint32 key = 1;
+    optional uint32 refcount = 2;
     optional string string = 3;
     optional .TSP.Reference reference = 4;
     optional .TSCE.FormulaArchive formula = 5;
@@ -138,7 +138,7 @@ message TableDataList {
     optional .TSP.Reference comment_storage = 10;
   }
   enum ListType {
-    STRING = 1;
+    STRING = 0;
     FORMAT = 2;
     FORMULA = 3;
     STYLE = 4;
@@ -149,53 +149,53 @@ message TableDataList {
     CONDITIONAL_STYLE = 9;
     COMMENT_STORAGE = 10;
   }
-  required .TST.TableDataList.ListType listType = 1;
-  required uint32 nextListID = 2;
+  optional .TST.TableDataList.ListType listType = 1;
+  optional uint32 nextListID = 2;
   repeated .TST.TableDataList.ListEntry entries = 3;
 }
 
 message TableRBTree {
   message Node {
-    required uint32 key = 1;
-    required uint32 value = 2;
+    optional uint32 key = 1;
+    optional uint32 value = 2;
   }
   repeated .TST.TableRBTree.Node nodes = 1;
 }
 
 message HeaderStorageBucket {
   message Header {
-    required uint32 index = 1;
-    required float size = 2;
-    required uint32 hidingState = 3;
-    required uint32 numberOfCells = 4;
+    optional uint32 index = 1;
+    optional float size = 2;
+    optional uint32 hidingState = 3;
+    optional uint32 numberOfCells = 4;
     optional .TSP.Reference cell_style = 5;
     optional .TSP.Reference text_style = 6;
   }
-  required uint32 bucketHashFunction = 1;
+  optional uint32 bucketHashFunction = 1;
   repeated .TST.HeaderStorageBucket.Header headers = 2;
 }
 
 message HeaderStorage {
-  required uint32 bucketHashFunction = 1;
+  optional uint32 bucketHashFunction = 1;
   repeated .TSP.Reference buckets = 2;
 }
 
 message DataStore {
-  required .TST.HeaderStorage rowHeaders = 1;
-  required .TSP.Reference columnHeaders = 2;
-  required .TST.TileStorage tiles = 3;
-  required .TSP.Reference stringTable = 4;
-  required .TSP.Reference styleTable = 5;
-  required .TSP.Reference formulaTable = 6;
+  optional .TST.HeaderStorage rowHeaders = 1;
+  optional .TSP.Reference columnHeaders = 2;
+  optional .TST.TileStorage tiles = 3;
+  optional .TSP.Reference stringTable = 4;
+  optional .TSP.Reference styleTable = 5;
+  optional .TSP.Reference formulaTable = 6;
   optional .TSP.Reference formulaErrorTable = 12;
-  required .TSP.Reference formatTable = 11;
+  optional .TSP.Reference formatTable = 11;
   optional .TSP.Reference multipleChoiceListFormatTable = 16;
   optional .TSP.Reference merge_region_map = 13;
   optional .TSP.Reference customFormatTable = 15;
-  required uint32 nextRowStripID = 7;
-  required uint32 nextColumnStripID = 8;
-  required .TST.TableRBTree rowTileTree = 9;
-  required .TST.TableRBTree columnTileTree = 10;
+  optional uint32 nextRowStripID = 7;
+  optional uint32 nextColumnStripID = 8;
+  optional .TST.TableRBTree rowTileTree = 9;
+  optional .TST.TableRBTree columnTileTree = 10;
   optional uint32 storage_version = 14;
   optional .TSP.Reference richTextPayloadTable = 17;
   optional .TSP.Reference conditionalstyletable = 18;
@@ -203,14 +203,14 @@ message DataStore {
 }
 
 message TableInfoArchive {
-  required .TSD.DrawableArchive super = 1;
-  required .TSP.Reference tableModel = 2;
+  optional .TSD.DrawableArchive super = 1;
+  optional .TSP.Reference tableModel = 2;
   optional .TSP.Reference editingState = 3;
 }
 
 message EditingStateArchive {
   optional .TSP.Reference editingStorage = 1;
-  required .TST.Cell editingCell = 2;
+  optional .TST.Cell editingCell = 2;
   optional .TST.SelectionArchive selection = 3;
   optional .TST.CellID lasteditingcellid = 4;
   optional .TST.CellID editingcellid = 5;
@@ -219,44 +219,44 @@ message EditingStateArchive {
 }
 
 message WPTableInfoArchive {
-  required .TST.TableInfoArchive super = 1;
+  optional .TST.TableInfoArchive super = 1;
   optional .TSP.Reference storage = 2;
 }
 
 message TableStyleNetworkArchive {
-  required .TSP.Reference table_style = 9;
-  required .TSP.Reference body_text_style = 1;
-  required .TSP.Reference header_row_text_style = 2;
-  required .TSP.Reference header_column_text_style = 3;
-  required .TSP.Reference footer_row_text_style = 4;
-  required .TSP.Reference body_cell_style = 5;
-  required .TSP.Reference header_row_style = 6;
-  required .TSP.Reference header_column_style = 7;
-  required .TSP.Reference footer_row_style = 8;
+  optional .TSP.Reference table_style = 9;
+  optional .TSP.Reference body_text_style = 1;
+  optional .TSP.Reference header_row_text_style = 2;
+  optional .TSP.Reference header_column_text_style = 3;
+  optional .TSP.Reference footer_row_text_style = 4;
+  optional .TSP.Reference body_cell_style = 5;
+  optional .TSP.Reference header_row_style = 6;
+  optional .TSP.Reference header_column_style = 7;
+  optional .TSP.Reference footer_row_style = 8;
   optional .TSP.Reference table_name_style = 10;
   optional .TSP.Reference table_name_shape_style = 11;
   optional uint32 preset_index = 12;
 }
 
 message TableModelArchive {
-  required string table_id = 1;
+  optional string table_id = 1;
   optional string from_table_id = 43;
-  required .TSP.Reference table_style = 3;
-  required .TSP.Reference body_text_style = 24;
-  required .TSP.Reference header_row_text_style = 25;
-  required .TSP.Reference header_column_text_style = 26;
-  required .TSP.Reference footer_row_text_style = 27;
-  required .TSP.Reference body_cell_style = 18;
-  required .TSP.Reference header_row_style = 19;
-  required .TSP.Reference header_column_style = 20;
-  required .TSP.Reference footer_row_style = 21;
+  optional .TSP.Reference table_style = 3;
+  optional .TSP.Reference body_text_style = 24;
+  optional .TSP.Reference header_row_text_style = 25;
+  optional .TSP.Reference header_column_text_style = 26;
+  optional .TSP.Reference footer_row_text_style = 27;
+  optional .TSP.Reference body_cell_style = 18;
+  optional .TSP.Reference header_row_style = 19;
+  optional .TSP.Reference header_column_style = 20;
+  optional .TSP.Reference footer_row_style = 21;
   optional .TSP.Reference table_name_style = 30;
   optional .TSP.Reference table_name_shape_style = 36;
-  required .TST.DataStore data_store = 4;
+  optional .TST.DataStore data_store = 4;
   optional .TSP.Reference provider = 5;
-  required uint32 number_of_rows = 6;
-  required uint32 number_of_columns = 7;
-  required string table_name = 8;
+  optional uint32 number_of_rows = 6;
+  optional uint32 number_of_columns = 7;
+  optional string table_name = 8;
   optional bool table_name_enabled = 22;
   optional double table_name_height = 33;
   optional bool table_name_border_enabled = 37;
@@ -270,10 +270,10 @@ message TableModelArchive {
   optional uint32 number_of_user_hidden_rows = 41;
   optional uint32 number_of_user_hidden_columns = 42;
   optional uint32 number_of_filtered_rows = 40;
-  required double default_row_height = 16;
-  required double default_column_width = 17;
+  optional double default_row_height = 16;
+  optional double default_column_width = 17;
   optional .TST.CellID origin_offset = 23 [deprecated = true];
-  required uint32 preset_index = 28;
+  optional uint32 preset_index = 28;
   optional bool repeating_header_rows_enabled = 29;
   optional bool repeating_header_columns_enabled = 32;
   optional bool style_apply_clears_all = 31;
@@ -287,7 +287,7 @@ message DurationWrapperArchive {
 }
 
 message Cell {
-  required .TST.CellValueType valueType = 2;
+  optional .TST.CellValueType valueType = 2;
   optional double numberValue = 5;
   optional string stringValue = 6;
   optional bool boolValue = 7;
@@ -318,42 +318,42 @@ message MergeRegionMapArchive {
 
 message CellMapArchive {
   message CellMapEntry {
-    required .TST.CellID cellID = 1;
+    optional .TST.CellID cellID = 1;
     optional .TST.Cell cell = 2;
   }
-  required uint32 capacity = 1;
-  required uint32 count = 2;
+  optional uint32 capacity = 1;
+  optional uint32 count = 2;
   repeated .TST.CellMapArchive.CellMapEntry cellMapEntry = 3;
-  optional bool may_modify_formulas_in_cells = 4 [default = true];
-  optional bool may_modify_values_referenced_by_formulas = 5 [default = true];
-  optional bool applies_to_hidden = 6 [default = false];
+  optional bool may_modify_formulas_in_cells = 4;
+  optional bool may_modify_values_referenced_by_formulas = 5;
+  optional bool applies_to_hidden = 6;
 }
 
 message DoubleStyleMapArchive {
   message DoubleStyleMapEntryArchive {
-    required .TST.CellID cell_id = 1;
-    required .TSP.Reference old_style = 2;
-    required .TSP.Reference new_style = 3;
+    optional .TST.CellID cell_id = 1;
+    optional .TSP.Reference old_style = 2;
+    optional .TSP.Reference new_style = 3;
   }
-  required uint32 capacity = 1;
-  required uint32 count = 2;
+  optional uint32 capacity = 1;
+  optional uint32 count = 2;
   repeated .TST.DoubleStyleMapArchive.DoubleStyleMapEntryArchive cell_map_entry = 3;
 }
 
 message StyleTableMapArchive {
   message StyleTableMapEntryArchive {
-    required uint32 key = 1;
-    required .TSP.Reference old_style = 2;
-    required .TSP.Reference new_style = 3;
+    optional uint32 key = 1;
+    optional .TSP.Reference old_style = 2;
+    optional .TSP.Reference new_style = 3;
   }
-  required uint32 capacity = 1;
-  required uint32 count = 2;
+  optional uint32 capacity = 1;
+  optional uint32 count = 2;
   repeated .TST.StyleTableMapArchive.StyleTableMapEntryArchive map_entry = 3;
 }
 
 message SelectionArchive {
   optional .TSP.Reference tableModel = 1 [deprecated = true];
-  required .TST.SelectionTypeArchive selection_type = 4;
+  optional .TST.SelectionTypeArchive selection_type = 4;
   optional .TST.CellID anchor_cell = 5;
   repeated .TST.CellRange cell_ranges = 6;
   repeated .TST.CellRange base_ranges = 7;
@@ -361,19 +361,19 @@ message SelectionArchive {
 }
 
 message FilterRuleArchive {
-  required .TST.FormulaPredicateArchive predicate = 1;
+  optional .TST.FormulaPredicateArchive predicate = 1;
   optional bool disabled = 2;
 }
 
 message TableStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TST.TableStylePropertiesArchive table_properties = 11;
 }
 
 message CellStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TST.CellStylePropertiesArchive cell_properties = 11;
 }
 
@@ -442,22 +442,22 @@ message FormulaPredicateArchive {
     Percent = 9;
     Values = 10;
   }
-  required .TSCE.FormulaArchive formula = 1;
-  required .TST.FormulaPredicateArchive.FormulaPredicateType predicate_type = 2;
-  required .TST.FormulaPredicateArchive.QualifierType qualifier1 = 3;
-  required .TST.FormulaPredicateArchive.QualifierType qualifier2 = 4;
-  required int32 param_index1 = 5;
-  required int32 param_index2 = 6;
-  required int32 param_index0 = 7;
+  optional .TSCE.FormulaArchive formula = 1;
+  optional .TST.FormulaPredicateArchive.FormulaPredicateType predicate_type = 2;
+  optional .TST.FormulaPredicateArchive.QualifierType qualifier1 = 3;
+  optional .TST.FormulaPredicateArchive.QualifierType qualifier2 = 4;
+  optional int32 param_index1 = 5;
+  optional int32 param_index2 = 6;
+  optional int32 param_index0 = 7;
 }
 
 message ConditionalStyleSetArchive {
   message ConditionalStyleRule {
-    required .TST.FormulaPredicateArchive predicate = 1;
-    required .TSP.Reference cell_style = 2;
-    required .TSP.Reference text_style = 3;
+    optional .TST.FormulaPredicateArchive predicate = 1;
+    optional .TSP.Reference cell_style = 2;
+    optional .TSP.Reference text_style = 3;
   }
-  required uint32 ruleCount = 1;
+  optional uint32 ruleCount = 1;
   repeated .TST.ConditionalStyleSetArchive.ConditionalStyleRule rules = 2;
   optional .TST.CellID cellID = 3;
 }
@@ -467,16 +467,16 @@ message FilterSetArchive {
     FilterSetArchiveTypeAll = 0;
     FilterSetArchiveTypeAny = 1;
   }
-  optional .TST.FilterSetArchive.FilterSetType type = 1 [default = FilterSetArchiveTypeAll];
-  optional bool is_enabled = 2 [default = true];
+  optional .TST.FilterSetArchive.FilterSetType type = 1;
+  optional bool is_enabled = 2;
   repeated .TST.FilterRuleArchive filter_rules = 3;
-  optional bool needs_formula_rewrite_for_import = 4 [default = false];
+  optional bool needs_formula_rewrite_for_import = 4;
   repeated uint32 filter_offsets = 5;
   repeated bool filter_enabled = 6;
 }
 
 message TokenAttachmentArchive {
-  required .TSWP.UIGraphicalAttachment super = 1;
+  optional .TSWP.UIGraphicalAttachment super = 1;
   optional .TSP.Reference expressionNode = 2;
 }
 
@@ -486,108 +486,108 @@ message FormulaArchive {
 
 message ExpressionNodeArchive {
   repeated .TSP.Reference children = 1;
-  optional uint64 first_index = 2 [default = 0];
-  optional uint64 last_index = 3 [default = 0];
+  optional uint64 first_index = 2;
+  optional uint64 last_index = 3;
 }
 
 message BooleanNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required bool value = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional bool value = 2;
 }
 
 message NumberNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required double number = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional double number = 2;
 }
 
 message StringNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required string value = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional string value = 2;
 }
 
 message IdentifierNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
+  optional .TST.ExpressionNodeArchive super = 1;
   optional string identifier = 2;
 }
 
 message ArrayNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
+  optional .TST.ExpressionNodeArchive super = 1;
   optional uint32 columns = 2;
   optional uint32 rows = 3;
 }
 
 message ListNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
+  optional .TST.ExpressionNodeArchive super = 1;
 }
 
 message OperatorNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required uint32 operatorChar = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional uint32 operatorChar = 2;
 }
 
 message PostfixOperatorNodeArchive {
-  required .TST.OperatorNodeArchive super = 1;
+  optional .TST.OperatorNodeArchive super = 1;
 }
 
 message PrefixOperatorNodeArchive {
-  required .TST.OperatorNodeArchive super = 1;
+  optional .TST.OperatorNodeArchive super = 1;
 }
 
 message FunctionNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required uint32 functionIndex = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional uint32 functionIndex = 2;
   optional string invalidFunctionName = 3;
 }
 
 message FunctionEndNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
+  optional .TST.ExpressionNodeArchive super = 1;
 }
 
 message DateNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required string value = 2;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional string value = 2;
   optional string format = 3;
 }
 
 message ReferenceNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required .TSCE.RangeReferenceArchive rangeReference = 2;
-  required uint32 stickyBits = 3;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional .TSCE.RangeReferenceArchive rangeReference = 2;
+  optional uint32 stickyBits = 3;
   optional string hostTableID = 4;
 }
 
 message DurationNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required double timeinterval = 2;
-  required uint32 smallest = 3;
-  required uint32 largest = 4;
-  required uint32 style = 5;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional double timeinterval = 2;
+  optional uint32 smallest = 3;
+  optional uint32 largest = 4;
+  optional uint32 style = 5;
 }
 
 message ArgumentPlaceholderNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
-  required uint32 functionIndex = 2;
-  required uint32 argumentIndex = 3;
+  optional .TST.ExpressionNodeArchive super = 1;
+  optional uint32 functionIndex = 2;
+  optional uint32 argumentIndex = 3;
   optional uint32 mode = 4;
 }
 
 message EmptyExpressionNodeArchive {
-  required .TST.ExpressionNodeArchive super = 1;
+  optional .TST.ExpressionNodeArchive super = 1;
 }
 
 message LayoutHintArchive {
-  required bool isValid = 1;
-  required .TST.CellRange cellRange = 2;
-  required .TST.CellID hintID = 3;
-  required .TSP.Size maximumSize = 4;
-  required uint32 partitionPosition = 5;
-  required bool horizontal = 6;
+  optional bool isValid = 1;
+  optional .TST.CellRange cellRange = 2;
+  optional .TST.CellID hintID = 3;
+  optional .TSP.Size maximumSize = 4;
+  optional uint32 partitionPosition = 5;
+  optional bool horizontal = 6;
   optional .TSP.Size effectiveSize = 7;
   optional uint32 partitioningPass = 8;
 }
 
 message CompletionTokenAttachmentArchive {
-  required .TST.TokenAttachmentArchive super = 1;
+  optional .TST.TokenAttachmentArchive super = 1;
   optional string completionText = 2;
   optional uint32 caretPosition = 3;
   optional uint32 prefixStart = 4;
@@ -596,17 +596,17 @@ message CompletionTokenAttachmentArchive {
 message HiddenStateFormulaOwnerArchive {
   optional .TSCE.CFUUIDArchive owner_id = 1;
   repeated .TSCE.CellValueArchive threshold_value = 2;
-  optional bool needs_to_update_filter_set_for_import = 3 [default = false];
+  optional bool needs_to_update_filter_set_for_import = 3;
 }
 
 message RichTextPayloadArchive {
-  required .TSP.Reference storage = 1;
+  optional .TSP.Reference storage = 1;
   optional .TSP.Range range = 2;
-  required .TST.CellID cellid = 3;
+  optional .TST.CellID cellid = 3;
 }
 
 message FormulaEqualsTokenAttachmentArchive {
-  required .TSWP.UIGraphicalAttachment super = 1;
+  optional .TSWP.UIGraphicalAttachment super = 1;
 }
 
 message CellRegion {

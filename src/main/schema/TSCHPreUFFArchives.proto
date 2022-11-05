@@ -1,7 +1,6 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
-import "TSKArchives.proto";
 import "TSDArchives.proto";
 import "TSSArchives.proto";
 import "TSCHArchives.Common.proto";
@@ -9,12 +8,12 @@ import "TSCH3DArchives.proto";
 package TSCH.PreUFF;
 
 message ChartInfoArchive {
-  required .TSD.DrawableArchive super = 1;
-  required .TSCH.PreUFF.ChartModelArchive chart_model = 2;
+  optional .TSD.DrawableArchive super = 1;
+  optional .TSCH.PreUFF.ChartModelArchive chart_model = 2;
   optional .TSP.Reference style = 3;
-  required .TSCH.ChartType chart_type = 4;
+  optional .TSCH.ChartType chart_type = 4;
   optional .TSCH.PreUFF.LegendModelArchive legend_model = 5;
-  required .TSCH.RectArchive inner_chart_frame = 6;
+  optional .TSCH.RectArchive inner_chart_frame = 6;
   repeated .TSP.Reference value_axis_styles = 7;
   repeated .TSP.Reference category_axis_styles = 8;
   repeated .TSP.Reference value_axis_nonstyles = 9;
@@ -35,14 +34,14 @@ message ChartInfoArchive {
 
 message LegendModelArchive {
   optional .TSP.Reference info = 1;
-  required .TSCH.RectArchive frame = 2;
-  required .TSP.Reference style = 3;
-  required .TSP.Reference non_style = 4;
+  optional .TSCH.RectArchive frame = 2;
+  optional .TSP.Reference style = 3;
+  optional .TSP.Reference non_style = 4;
 }
 
 message ChartModelArchive {
   optional .TSP.Reference info = 1;
-  required .TSP.Reference grid = 2;
+  optional .TSP.Reference grid = 2;
   repeated uint32 series_types = 3;
   optional uint32 scatter_format = 4;
   optional .TSCH.PreUFF.ChartGridArchive inline_grid = 5;
@@ -53,42 +52,42 @@ message ChartGridArchive {
   message ValueRow {
     repeated double value = 1;
   }
-  required int32 direction = 1;
+  optional int32 direction = 1;
   repeated string row_name = 2;
   repeated string column_name = 3;
   repeated .TSCH.PreUFF.ChartGridArchive.ValueRow value_row = 4;
-  required bool dirty = 6;
+  optional bool dirty = 6;
 }
 
 message ChartsNumberFormatArchive {
-  required .TSCH.NumberValueType value_type = 1;
+  optional .TSCH.NumberValueType value_type = 1;
   optional string format_string = 2;
-  required uint32 decimal_places = 3;
+  optional uint32 decimal_places = 3;
   optional string currency_code = 4;
-  required .TSCH.NegativeNumberStyle negative_style = 5;
-  required bool show_thousands_separator = 6;
-  required .TSCH.FractionAccuracy fraction_accuracy = 7;
+  optional .TSCH.NegativeNumberStyle negative_style = 5;
+  optional bool show_thousands_separator = 6;
+  optional .TSCH.FractionAccuracy fraction_accuracy = 7;
   optional string suffix_string = 8;
-  required uint32 base = 9;
-  required uint32 base_places = 10;
-  required bool base_use_minus_sign = 11;
-  required bool use_accounting_style = 12;
-  required bool is_custom = 13;
-  required double scale_factor = 14;
+  optional uint32 base = 9;
+  optional uint32 base_places = 10;
+  optional bool base_use_minus_sign = 11;
+  optional bool use_accounting_style = 12;
+  optional bool is_custom = 13;
+  optional double scale_factor = 14;
   repeated string interstitial_strings = 15;
-  required .TSP.IndexSet interstitial_string_insertion_indexes = 16;
-  required uint32 index_from_right_of_last_digit_placeholder = 17;
-  required bool is_text_format = 18;
-  required uint32 minimum_integer_width = 19;
-  required uint32 decimal_width = 20;
-  required uint32 number_of_non_space_integer_placeholder_digits = 21;
-  required uint32 number_of_non_space_decimal_placeholder_digits = 22;
+  optional .TSP.IndexSet interstitial_string_insertion_indexes = 16;
+  optional uint32 index_from_right_of_last_digit_placeholder = 17;
+  optional bool is_text_format = 18;
+  optional uint32 minimum_integer_width = 19;
+  optional uint32 decimal_width = 20;
+  optional uint32 number_of_non_space_integer_placeholder_digits = 21;
+  optional uint32 number_of_non_space_decimal_placeholder_digits = 22;
   optional string format_name = 23;
   optional string prefix_string = 24;
 }
 
 message ChartStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional .TSD.FillArchive tschchartinfodefaultbackgroundfill = 10;
   optional .TSD.StrokeArchive tschchartinfodefaultbackgroundstroke = 11;
   optional .TSD.FillArchive tschchartinfodefaultgridbackgroundfill = 12;
@@ -130,7 +129,7 @@ message ChartStyleArchive {
 }
 
 message ChartNonStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional string tschchartinfodefaulttitle = 10;
   optional bool tschchartinfodefaultshowlegend = 11;
   optional float tschchartinfodefaultpiestartangle = 12;
@@ -157,7 +156,7 @@ message ChartNonStyleArchive {
 }
 
 message LegendStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional .TSD.FillArchive tschlegendmodeldefaultfill = 10;
   optional .TSD.StrokeArchive tschlegendmodeldefaultstroke = 11;
   optional .TSD.ShadowArchive tschlegendmodeldefaultshadow = 14;
@@ -166,11 +165,11 @@ message LegendStyleArchive {
 }
 
 message LegendNonStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
 }
 
 message ChartAxisStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional bool tschchartaxisvalueshowmajorgridlines = 10;
   optional bool tschchartaxisvalueshowminorgridlines = 11;
   optional .TSD.StrokeArchive tschchartaxisvaluemajorgridlinestroke = 12;
@@ -215,7 +214,7 @@ message ChartAxisStyleArchive {
 }
 
 message ChartAxisNonStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional .TSCH.ChartsNSNumberDoubleArchive tschchartaxisdefaultusermin = 11;
   optional .TSCH.ChartsNSNumberDoubleArchive tschchartaxisdefaultusermax = 12;
   optional .TSCH.PreUFF.ChartsNumberFormatArchive tschchartaxisdefaultnumberformat = 13;
@@ -237,7 +236,7 @@ message ChartAxisNonStyleArchive {
 }
 
 message ChartSeriesStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional int32 tschchartseriesdefaulttrendlineequationparagraphstyleindex = 201;
   optional int32 tschchartseriesdefaulttrendlinersquaredparagraphstyleindex = 202;
   optional float tschchartseriesdefaulttrendlineequationopacity = 205;
@@ -345,7 +344,7 @@ message ChartSeriesStyleArchive {
 }
 
 message ChartSeriesNonStyleArchive {
-  required .TSS.StyleArchive super = 1;
+  optional .TSS.StyleArchive super = 1;
   optional .TSCH.PreUFF.ChartsNumberFormatArchive tschchartseriesdefaultnumberformat = 10;
   optional int32 tschchartseriesdefaultnumberformattype = 11;
   optional bool tschchartseriesbarshowvaluelabels = 12;

@@ -1,17 +1,14 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSDArchives.proto";
 import "TSKArchives.proto";
 import "TSPMessages.proto";
 import "TSWPArchives.proto";
-import "TSSArchives.proto";
-import "TSAArchives.proto";
-import "TPArchives.proto";
 import "TSWPCommandArchives.proto";
 package TP;
 
 message InsertDrawablesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional uint32 page_index = 2;
   optional uint32 z_order = 3;
   repeated .TSP.Reference drawables = 4;
@@ -23,12 +20,12 @@ message PasteDrawablesCommandArchive {
     optional .TSP.Reference drawable = 1;
     optional uint32 page_index = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   repeated .TP.PasteDrawablesCommandArchive.DrawableAndPage drawables = 2;
 }
 
 message PasteAnchoredDrawablesCommandArchive {
-  required .TSK.CommandGroupArchive deprecated_super = 1;
+  optional .TSK.CommandGroupArchive deprecated_super = 1;
   optional .TSK.CommandArchive super = 4;
   optional bool select = 2;
   optional .TSP.Reference deprecated_undo_selection = 3;
@@ -40,25 +37,25 @@ message MoveDrawablesPageIndexCommandArchive {
     optional .TSP.Reference drawable = 1;
     optional uint32 z_order = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional uint32 page_index = 2;
   repeated .TP.MoveDrawablesPageIndexCommandArchive.Drawable drawables = 3;
 }
 
 message InsertSectionBreakCommandArchive {
-  required .TSWP.TextCommandArchive super = 1;
+  optional .TSWP.TextCommandArchive super = 1;
 }
 
 message DeleteSectionCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
 }
 
 message ReplaceSectionCommandArchive {
-  required .TSWP.TextCommandArchive super = 1;
+  optional .TSWP.TextCommandArchive super = 1;
 }
 
 message ChangeSectionPropertyCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional uint32 section_index = 2;
   optional string section_property = 3;
   optional bool section_value_bool = 4;
@@ -66,10 +63,10 @@ message ChangeSectionPropertyCommandArchive {
 
 message SwapDrawableZOrderCommandArchive {
   message SwapPair {
-    required uint32 z_order_1 = 1;
-    required uint32 z_order_2 = 2;
+    optional uint32 z_order_1 = 1;
+    optional uint32 z_order_2 = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   repeated .TP.SwapDrawableZOrderCommandArchive.SwapPair swap_pairs = 2;
 }
 
@@ -79,12 +76,12 @@ message RemoveDrawablesCommandArchive {
     optional int32 z_order = 2;
     optional .TSP.Reference drawable_object = 3;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   repeated .TP.RemoveDrawablesCommandArchive.DrawableInfo drawables = 2;
 }
 
 message NudgeDrawablesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   repeated .TSP.Reference child_commands = 2;
 }
 
@@ -98,7 +95,7 @@ message ChangeHeaderFooterVisibilityCommandArchive {
     kTPHeaderCenter = 1;
     kTPHeaderRight = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool visible = 2;
   optional .TP.ChangeHeaderFooterVisibilityCommandArchive.TPHeaderFooterType type = 3;
   optional .TP.ChangeHeaderFooterVisibilityCommandArchive.TPHeaderFragmentIndex index_to_select = 4;
@@ -114,14 +111,14 @@ message ChangeSectionMarginsCommandArchive {
     kSectionMarginHeader = 4;
     kSectionMarginFooter = 5;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference section = 2;
   optional .TP.ChangeSectionMarginsCommandArchive.SectionMargin margin = 3;
   optional float margin_value = 4;
 }
 
 message ChangeDocumentPrinterOptionsCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference OBSOLETE_section = 2;
   optional float paper_width = 3;
   optional float paper_height = 4;
@@ -132,7 +129,7 @@ message ChangeDocumentPrinterOptionsCommandArchive {
 }
 
 message InsertMasterDrawablesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference OBSOLETE_section = 2;
   repeated .TSP.Reference master_drawables = 3;
   optional uint32 drawable_index = 4;
@@ -140,7 +137,7 @@ message InsertMasterDrawablesCommandArchive {
 }
 
 message MoveMasterDrawableZOrderCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference OBSOLETE_section = 2;
   repeated .TSP.Reference master_drawables = 3;
   repeated uint32 indexes = 4;
@@ -152,14 +149,14 @@ message RemoveMasterDrawablesCommandArchive {
     optional .TSP.Reference drawable = 1;
     optional uint32 drawable_index = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference OBSOLETE_section = 2;
   repeated .TP.RemoveMasterDrawablesCommandArchive.MasterDrawable master_drawables = 3;
   optional .TSP.Reference master_drawable_provider = 4;
 }
 
 message PasteMasterDrawablesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference section = 2;
   repeated .TSP.Reference master_drawables = 3;
   optional uint32 drawable_index = 4;
@@ -174,7 +171,7 @@ message MoveDrawablesAttachedCommandArchive {
     optional uint32 page_index = 5;
     optional int32 z_order = 6;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSWP.UndoTransaction undo_transaction = 2;
   repeated .TP.MoveDrawablesAttachedCommandArchive.FloatingUndo floating_undo = 3;
   optional bool select = 4;
@@ -196,14 +193,14 @@ message MoveDrawablesFloatingCommandArchive {
     optional .TSP.Reference storage = 11;
     optional .TSWP.UndoTransaction undo_transaction = 12;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSWP.UndoTransaction deprecated_undo_transaction = 2;
   repeated .TP.MoveDrawablesFloatingCommandArchive.AttachedUndo attached_undo = 3;
   optional bool select = 4;
 }
 
 message RemoveAnchoredDrawableCommandArchive {
-  required .TSWP.TextCommandArchive super = 1;
+  optional .TSWP.TextCommandArchive super = 1;
   optional uint32 char_index = 2;
   optional uint32 z_order = 3;
 }
@@ -216,7 +213,7 @@ message ChangeFootnoteFormatCommandArchive {
     kFootnoteFormatJapaneseNumeric = 3;
     kFootnoteFormatJapaneseIdeographic = 4;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TP.ChangeFootnoteFormatCommandArchive.FootnoteFormat format = 2;
 }
 
@@ -226,7 +223,7 @@ message ChangeFootnoteKindCommandArchive {
     kFootnoteKindDocumentEndnotes = 1;
     kFootnoteKindSectionEndnotes = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TP.ChangeFootnoteKindCommandArchive.FootnoteKind kind = 2;
   optional .TSWP.UndoTransaction undo_transaction = 3;
 }
@@ -237,17 +234,17 @@ message ChangeFootnoteNumberingCommandArchive {
     kFootnoteNumberingRestartEachPage = 1;
     kFootnoteNumberingRestartEachSection = 2;
   }
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TP.ChangeFootnoteNumberingCommandArchive.FootnoteNumbering numbering = 2;
 }
 
 message ChangeFootnoteSpacingCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional int32 footnote_spacing = 2;
 }
 
 message MoveInlineDrawableAnchoredCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference drawable = 2;
   optional bool is_html_wrap = 3;
   optional uint32 type = 4;
@@ -258,7 +255,7 @@ message MoveInlineDrawableAnchoredCommandArchive {
 }
 
 message MoveAnchoredDrawableInlineCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional .TSP.Reference drawable = 2;
   optional bool is_html_wrap = 3;
   optional uint32 type = 4;
@@ -270,16 +267,16 @@ message MoveAnchoredDrawableInlineCommandArchive {
 }
 
 message InsertFootnoteCommandArchive {
-  required .TSWP.TextCommandArchive super = 1;
+  optional .TSWP.TextCommandArchive super = 1;
 }
 
 message ToggleBodyLayoutDirectionCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool new_direction_is_vertical = 2;
 }
 
 message ChangeCTVisibilityCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool markup_visible = 2;
   optional bool deletions_visible = 3;
   optional uint32 selection_range_location = 4;
@@ -287,29 +284,29 @@ message ChangeCTVisibilityCommandArchive {
 }
 
 message TrackChangesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool track_changes = 2;
   repeated .TSP.Reference change_session_history = 3;
   optional bool paused = 4;
 }
 
 message DocumentHyphenationCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool hyphenate_document = 2;
 }
 
 message DocumentLigaturesCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool use_ligatures = 2;
 }
 
 message DocumentHasBodyCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool has_body = 2;
 }
 
 message PauseChangeTrackingCommandArchive {
-  required .TSK.CommandArchive super = 1;
+  optional .TSK.CommandArchive super = 1;
   optional bool paused = 2;
 }
 

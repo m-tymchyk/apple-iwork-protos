@@ -1,7 +1,5 @@
-syntax = "proto2";
+syntax = "proto3";
 
-import "TSDArchives.proto";
-import "TSKArchives.proto";
 import "TSPMessages.proto";
 import "TSWPArchives.proto";
 import "TSSArchives.proto";
@@ -16,7 +14,7 @@ enum ViewScaleMode {
 }
 
 message DocumentArchive {
-  required .TSA.DocumentArchive super = 15;
+  optional .TSA.DocumentArchive super = 15;
   optional .TSP.Reference stylesheet = 2;
   optional .TSP.Reference floating_drawables = 3;
   optional .TSP.Reference body_storage = 4;
@@ -42,14 +40,14 @@ message DocumentArchive {
   optional bool layout_body_vertically = 39;
   optional bool change_tracking_enabled = 40;
   optional .TSP.Reference tables_custom_format_list = 41;
-  optional uint32 orientation = 42 [default = 0];
+  optional uint32 orientation = 42;
   optional string printer_id = 43;
   optional string paper_id = 44;
   optional bool change_tracking_paused = 45;
 }
 
 message ThemeArchive {
-  required .TSS.ThemeArchive super = 1;
+  optional .TSS.ThemeArchive super = 1;
 }
 
 message SettingsArchive {
@@ -70,24 +68,24 @@ message SettingsArchive {
     kFootnoteNumberingRestartEachPage = 1;
     kFootnoteNumberingRestartEachSection = 2;
   }
-  optional bool body = 1 [default = true];
-  optional bool headers = 2 [default = true];
-  optional bool footers = 3 [default = true];
-  optional bool preview = 4 [default = true];
-  optional bool copy_movies = 5 [default = true];
-  optional bool copy_assets = 6 [default = true];
-  optional bool placeholder_authoring = 7 [default = false];
-  optional bool links_enabled = 8 [default = true];
-  optional bool hyphenation = 9 [default = false];
-  optional bool use_ligatures = 10 [default = false];
-  optional bool toc_links_enabled = 11 [default = false];
-  optional bool show_ct_markup = 12 [default = true];
-  optional bool show_ct_deletions = 13 [default = true];
+  optional bool body = 1;
+  optional bool headers = 2;
+  optional bool footers = 3;
+  optional bool preview = 4;
+  optional bool copy_movies = 5;
+  optional bool copy_assets = 6;
+  optional bool placeholder_authoring = 7;
+  optional bool links_enabled = 8;
+  optional bool hyphenation = 9;
+  optional bool use_ligatures = 10;
+  optional bool toc_links_enabled = 11;
+  optional bool show_ct_markup = 12;
+  optional bool show_ct_deletions = 13;
   optional int32 ct_bubbles_visibility = 14;
-  optional bool change_bars_visible = 15 [default = true];
-  optional bool format_changes_visible = 16 [default = true];
-  optional bool annotations_visible = 17 [default = true];
-  optional bool document_is_rtl = 18 [default = false];
+  optional bool change_bars_visible = 15;
+  optional bool format_changes_visible = 16;
+  optional bool annotations_visible = 17;
+  optional bool document_is_rtl = 18;
   optional string decimal_tab = 20;
   optional string language = 21;
   optional string hyphenation_language = 22;
@@ -100,11 +98,11 @@ message SettingsArchive {
   optional .TP.SettingsArchive.FootnoteFormat footnote_format = 31;
   optional .TP.SettingsArchive.FootnoteNumbering footnote_numbering = 32;
   optional int32 footnote_gap = 33;
-  optional bool section_authoring = 40 [default = false];
+  optional bool section_authoring = 40;
 }
 
 message PlaceholderArchive {
-  required .TSWP.ShapeInfoArchive super = 1;
+  optional .TSWP.ShapeInfoArchive super = 1;
 }
 
 message FloatingDrawablesArchive {
@@ -112,7 +110,7 @@ message FloatingDrawablesArchive {
     optional .TSP.Reference drawable = 1;
   }
   message PageGroup {
-    required uint32 page_index = 1;
+    optional uint32 page_index = 1;
     repeated .TP.FloatingDrawablesArchive.DrawableEntry background_drawables = 2;
     repeated .TP.FloatingDrawablesArchive.DrawableEntry foreground_drawables = 3;
     repeated .TP.FloatingDrawablesArchive.DrawableEntry drawables = 4;
@@ -202,12 +200,12 @@ message SectionHintArchive {
 }
 
 message TextboxHintArchive {
-  required .TSP.Range range = 1;
-  required .TSP.Size size = 2;
+  optional .TSP.Range range = 1;
+  optional .TSP.Size size = 2;
 }
 
 message TopicNumberEntryArchive {
-  required .TSP.Reference list_style = 1;
+  optional .TSP.Reference list_style = 1;
   repeated uint32 topic_number = 2;
   repeated uint32 character_index = 3;
 }
@@ -227,10 +225,10 @@ message LayoutStateArchive {
 }
 
 message CanvasSelectionArchive {
-  required .TSWP.SelectionType type = 1;
-  required .TSP.Range range = 2;
-  required .TSWP.StyleInsertionBehavior style_insertion_behavior = 3;
-  required .TSWP.CaretAffinity caret_affinity = 4;
+  optional .TSWP.SelectionType type = 1;
+  optional .TSP.Range range = 2;
+  optional .TSWP.StyleInsertionBehavior style_insertion_behavior = 3;
+  optional .TSWP.CaretAffinity caret_affinity = 4;
   repeated .TSP.Reference infos = 5;
   repeated .TSP.Reference excluded_infos = 6;
   repeated .TSP.Reference additional_infos = 7;
@@ -246,13 +244,13 @@ message ViewStateArchive {
   optional bool master_drawables_selectable = 6;
   optional .TSP.Size visible_rect_size = 7;
   repeated .TSCH.ChartUIState chart_ui_state = 8;
-  optional bool ruler_visible = 9 [default = true];
-  optional bool layout_borders_visible = 10 [default = false];
-  optional bool word_count_hud_visible = 11 [default = false];
-  optional bool shows_comments = 12 [default = true];
-  optional bool shows_page_navigator = 13 [default = false];
-  optional .TP.ViewScaleMode view_scale_mode = 14 [default = ViewScaleMode_UserDefined];
-  optional float view_scale = 15 [default = 1.25];
+  optional bool ruler_visible = 9;
+  optional bool layout_borders_visible = 10;
+  optional bool word_count_hud_visible = 11;
+  optional bool shows_comments = 12 ;
+  optional bool shows_page_navigator = 13 ;
+  optional .TP.ViewScaleMode view_scale_mode = 14 ;
+  optional float view_scale = 15;
   optional .TSP.Point window_frame_origin = 16;
   optional .TSP.Size window_frame_size = 17;
   optional string selected_inspector_switch_segment_identifier = 18;

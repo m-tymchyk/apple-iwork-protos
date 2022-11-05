@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
 import "TSKArchives.proto";
@@ -12,10 +12,10 @@ enum LineJoin {
 }
 
 message EdgeInsetsArchive {
-  required float top = 1;
-  required float left = 2;
-  required float bottom = 3;
-  required float right = 4;
+  optional float top = 1;
+  optional float left = 2;
+  optional float bottom = 3;
+  optional float right = 4;
 }
 
 message GeometryArchive {
@@ -68,7 +68,7 @@ message ConnectionLinePathSourceArchive {
     kTSDConnectionLineTypeQuadratic = 0;
     kTSDConnectionLineTypeOrthogonal = 1;
   }
-  required .TSD.BezierPathSourceArchive super = 1;
+  optional .TSD.BezierPathSourceArchive super = 1;
   optional .TSD.ConnectionLinePathSourceArchive.ConnectionLinePathSourceType type = 2;
   optional float outset_from = 3;
   optional float outset_to = 4;
@@ -76,17 +76,17 @@ message ConnectionLinePathSourceArchive {
 
 message EditableBezierPathSourceArchive {
   message Node {
-    required .TSP.Point inControlPoint = 1;
-    required .TSP.Point nodePoint = 2;
-    required .TSP.Point outControlPoint = 3;
-    required .TSD.EditableBezierPathSourceArchive.NodeType type = 4;
+    optional .TSP.Point inControlPoint = 1;
+    optional .TSP.Point nodePoint = 2;
+    optional .TSP.Point outControlPoint = 3;
+    optional .TSD.EditableBezierPathSourceArchive.NodeType type = 4;
   }
   message Subpath {
     repeated .TSD.EditableBezierPathSourceArchive.Node nodes = 1;
-    required bool closed = 2;
+    optional bool closed = 2;
   }
   enum NodeType {
-    sharp = 1;
+    sharp = 0;
     bezier = 2;
     smooth = 3;
   }
@@ -142,7 +142,7 @@ message ImageFillArchive {
     ScaleToFit = 4;
   }
   optional .TSP.DataReference imagedata = 6;
-  optional .TSD.ImageFillArchive.ImageFillTechnique technique = 2 [default = NaturalSize];
+  optional .TSD.ImageFillArchive.ImageFillTechnique technique = 2;
   optional .TSP.Color tint = 3;
   optional .TSP.Size fillsize = 4;
   optional .TSP.DataReference originalimagedata = 7;
@@ -155,7 +155,6 @@ message FillArchive {
   optional .TSP.Color color = 1;
   optional .TSD.GradientArchive gradient = 2;
   optional .TSD.ImageFillArchive image = 3;
-  extensions 100 to 536870911;
 }
 
 message StrokePatternArchive {
@@ -204,7 +203,7 @@ message PatternedStrokeArchive {
 
 message LineEndArchive {
   optional .TSP.Path path = 1;
-  optional .TSD.LineJoin line_join = 2 [default = MiterJoin];
+  optional .TSD.LineJoin line_join = 2;
   optional .TSP.Point end_point = 3;
   optional bool is_filled = 4;
   optional string identifier = 5;
@@ -217,12 +216,12 @@ message ShadowArchive {
     TSDCurvedShadow = 2;
   }
   optional .TSP.Color color = 1;
-  optional float angle = 2 [default = 315];
-  optional float offset = 3 [default = 5];
-  optional int32 radius = 4 [default = 1];
-  optional float opacity = 5 [default = 1];
-  optional bool is_enabled = 6 [default = true];
-  optional .TSD.ShadowArchive.ShadowType type = 7 [default = TSDDropShadow];
+  optional float angle = 2;
+  optional float offset = 3 ;
+  optional int32 radius = 4 ;
+  optional float opacity = 5;
+  optional bool is_enabled = 6;
+  optional .TSD.ShadowArchive.ShadowType type = 7;
   optional .TSD.DropShadowArchive dropShadow = 8;
   optional .TSD.ContactShadowArchive contactShadow = 9;
   optional .TSD.CurvedShadowArchive curvedShadow = 10;
@@ -232,16 +231,16 @@ message DropShadowArchive {
 }
 
 message ContactShadowArchive {
-  optional float height = 2 [default = 0.2];
-  optional float offset = 4 [default = 0];
+  optional float height = 2 ;
+  optional float offset = 4 ;
 }
 
 message CurvedShadowArchive {
-  optional float curve = 1 [default = 0.6];
+  optional float curve = 1;
 }
 
 message ReflectionArchive {
-  optional float opacity = 1 [default = 0.5];
+  optional float opacity = 1;
 }
 
 message ImageAdjustmentsArchive {
@@ -255,10 +254,10 @@ message ImageAdjustmentsArchive {
   optional float temperature = 8;
   optional float tint = 9;
   optional float bottom_level = 10;
-  optional float top_level = 11 [default = 1];
+  optional float top_level = 11;
   optional float gamma = 12;
-  optional bool enhance = 13 [default = false];
-  optional bool represents_sage_adjustments = 14 [default = false];
+  optional bool enhance = 13;
+  optional bool represents_sage_adjustments = 14;
 }
 
 message ShapeStylePropertiesArchive {
@@ -270,8 +269,8 @@ message ShapeStylePropertiesArchive {
 }
 
 message ShapeStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSD.ShapeStylePropertiesArchive shape_properties = 11;
 }
 
@@ -283,8 +282,8 @@ message MediaStylePropertiesArchive {
 }
 
 message MediaStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSD.MediaStylePropertiesArchive media_properties = 11;
 }
 
@@ -297,17 +296,14 @@ message ThemePresetsArchive {
   repeated .TSP.Reference textbox_style_presets = 6;
   repeated .TSP.Reference image_style_presets = 7;
   repeated .TSP.Reference movie_style_presets = 8;
-  extend .TSS.ThemeArchive {
-    optional .TSD.ThemePresetsArchive extension = 100;
-  }
 }
 
 message ThemeReplaceFillPresetCommandArchive {
-  required .TSK.CommandArchive super = 1;
-  required .TSP.Reference theme = 2;
-  required .TSD.FillArchive fill = 3;
-  required .TSD.FillArchive old_fill = 4;
-  required uint32 index = 5;
+  optional .TSK.CommandArchive super = 1;
+  optional .TSP.Reference theme = 2;
+  optional .TSD.FillArchive fill = 3;
+  optional .TSD.FillArchive old_fill = 4;
+  optional uint32 index = 5;
 }
 
 message DrawableArchive {
@@ -328,12 +324,12 @@ message ContainerArchive {
 }
 
 message GroupArchive {
-  required .TSD.DrawableArchive super = 1;
+  optional .TSD.DrawableArchive super = 1;
   repeated .TSP.Reference children = 2;
 }
 
 message ShapeArchive {
-  required .TSD.DrawableArchive super = 1;
+  optional .TSD.DrawableArchive super = 1;
   optional .TSP.Reference style = 2;
   optional .TSD.PathSourceArchive pathsource = 3;
   optional .TSD.LineEndArchive head_line_end = 4;
@@ -341,13 +337,13 @@ message ShapeArchive {
 }
 
 message ConnectionLineArchive {
-  required .TSD.ShapeArchive super = 1;
+  optional .TSD.ShapeArchive super = 1;
   optional .TSP.Reference connected_from = 2;
   optional .TSP.Reference connected_to = 3;
 }
 
 message ImageArchive {
-  required .TSD.DrawableArchive super = 1;
+  optional .TSD.DrawableArchive super = 1;
   optional .TSP.DataReference data = 11;
   optional .TSP.Reference style = 3;
   optional .TSP.Size originalSize = 4;
@@ -368,12 +364,12 @@ message ImageArchive {
 }
 
 message MaskArchive {
-  required .TSD.DrawableArchive super = 1;
+  optional .TSD.DrawableArchive super = 1;
   optional .TSD.PathSourceArchive pathsource = 2;
 }
 
 message MovieArchive {
-  required .TSD.DrawableArchive super = 1;
+  optional .TSD.DrawableArchive super = 1;
   optional .TSP.DataReference movieData = 14;
   optional .TSP.DataReference importedAuxiliaryMovieData = 22;
   optional string movieRemoteURL = 17;

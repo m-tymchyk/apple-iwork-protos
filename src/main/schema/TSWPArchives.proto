@@ -1,9 +1,8 @@
-syntax = "proto2";
+syntax = "proto3";
 
 import "TSPMessages.proto";
 import "TSSArchives.proto";
 import "TSDArchives.proto";
-import "TSKArchives.proto";
 package TSWP;
 
 enum SelectionType {
@@ -29,22 +28,22 @@ enum CaretAffinity {
 }
 
 enum WritingDirectionType {
-  kWritingDirectionNatural = -1;
-  kWritingDirectionLeftToRight = 0;
-  kWritingDirectionRightToLeft = 1;
+  kWritingDirectionNatural = 0;
+  kWritingDirectionLeftToRight = 1;
+  kWritingDirectionRightToLeft = 2;
 }
 
 message SelectionArchive {
-  required .TSWP.SelectionType type = 1;
-  required .TSP.Range range = 2;
-  required .TSWP.StyleInsertionBehavior styleInsertionBehavior = 3;
-  required .TSWP.CaretAffinity caretAffinity = 4;
-  required .TSP.Range smart_field_range = 5;
+  optional .TSWP.SelectionType type = 1;
+  optional .TSP.Range range = 2;
+  optional .TSWP.StyleInsertionBehavior styleInsertionBehavior = 3;
+  optional .TSWP.CaretAffinity caretAffinity = 4;
+  optional .TSP.Range smart_field_range = 5;
 }
 
 message ObjectAttributeTable {
   message ObjectAttribute {
-    required uint32 character_index = 1;
+    optional uint32 character_index = 1;
     optional .TSP.Reference object = 2;
   }
   repeated .TSWP.ObjectAttributeTable.ObjectAttribute entries = 1;
@@ -52,7 +51,7 @@ message ObjectAttributeTable {
 
 message StringAttributeTable {
   message StringAttribute {
-    required uint32 character_index = 1;
+    optional uint32 character_index = 1;
     optional string object = 2;
   }
   repeated .TSWP.StringAttributeTable.StringAttribute entries = 1;
@@ -60,20 +59,20 @@ message StringAttributeTable {
 
 message ParaDataAttributeTable {
   message ParaDataAttribute {
-    required uint32 character_index = 1;
-    required uint32 first = 2;
-    required uint32 second = 3;
+    optional uint32 character_index = 1;
+    optional uint32 first = 2;
+    optional uint32 second = 3;
   }
   repeated .TSWP.ParaDataAttributeTable.ParaDataAttribute entries = 1;
 }
 
 message SparseObjectAttributeTable {
   message SparseObjectAttribute {
-    required uint32 character_index = 1;
+    optional uint32 character_index = 1;
     optional .TSP.Reference object = 2;
-    required uint32 run_length = 3;
+    optional uint32 run_length = 3;
   }
-  required uint32 total_count = 1;
+  optional uint32 total_count = 1;
   repeated .TSWP.SparseObjectAttributeTable.SparseObjectAttribute entries = 2;
 }
 
@@ -88,11 +87,11 @@ message StorageArchive {
     UNCLASSIFIED = 6;
     TABLEOFCONTENTS = 7;
   }
-  optional .TSWP.StorageArchive.KindType kind = 1 [default = TEXTBOX];
+  optional .TSWP.StorageArchive.KindType kind = 1;
   optional .TSP.Reference style_sheet = 2;
   repeated string text = 3;
-  optional bool has_itext = 4 [default = false];
-  optional bool in_document = 10 [default = false];
+  optional bool has_itext = 4;
+  optional bool in_document = 10;
   optional .TSWP.ObjectAttributeTable table_para_style = 5;
   optional .TSWP.ParaDataAttributeTable table_para_data = 6;
   optional .TSWP.ObjectAttributeTable table_list_style = 7;
@@ -118,8 +117,8 @@ message HighlightArchive {
 }
 
 message FontFeatureArchive {
-  required uint32 feature_type = 1;
-  required uint32 feature_selector = 2;
+  optional uint32 feature_type = 1;
+  optional uint32 feature_selector = 2;
 }
 
 message CharacterStylePropertiesArchive {
@@ -185,7 +184,7 @@ message CharacterStylePropertiesArchive {
   optional bool word_underline = 32;
   optional bool font_features_null = 33;
   repeated .TSWP.FontFeatureArchive font_features = 34;
-  optional .TSWP.WritingDirectionType writing_direction = 35 [default = kWritingDirectionNatural];
+  optional .TSWP.WritingDirectionType writing_direction = 35;
   optional bool emphasis_marks_null = 36;
   optional string emphasis_marks = 37;
   optional bool compatibility_font_name_null = 38;
@@ -193,8 +192,8 @@ message CharacterStylePropertiesArchive {
 }
 
 message CharacterStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSWP.CharacterStylePropertiesArchive char_properties = 11;
 }
 
@@ -280,7 +279,7 @@ message ParagraphStylePropertiesArchive {
   optional bool show_in_toc = 33;
   optional bool toc_style_id_null = 34;
   optional string toc_style_id = 35;
-  optional .TSWP.WritingDirectionType writing_direction = 38 [default = kWritingDirectionNatural];
+  optional .TSWP.WritingDirectionType writing_direction = 38;
   optional bool list_style_null = 39;
   optional .TSP.Reference list_style = 40;
   optional bool following_style_null = 41;
@@ -288,17 +287,17 @@ message ParagraphStylePropertiesArchive {
 }
 
 message ParagraphStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSWP.CharacterStylePropertiesArchive char_properties = 11;
   optional .TSWP.ParagraphStylePropertiesArchive para_properties = 12;
 }
 
 message ListStyleArchive {
   message LabelGeometry {
-    optional float scale = 1 [default = 1];
-    optional float baseline_offset = 2 [default = 0];
-    optional bool scale_with_text = 3 [default = true];
+    optional float scale = 1;
+    optional float baseline_offset = 2;
+    optional bool scale_with_text = 3;
   }
   message LabelImage {
     optional .TSP.DataReference image = 3;
@@ -375,8 +374,8 @@ message ListStyleArchive {
     kHebrewAlphaRightParenKind = 60;
     kHebrewBiblicalStandardKind = 61;
   }
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   repeated .TSWP.ListStyleArchive.LabelType label_types = 11;
   repeated float text_indents = 12;
   repeated float indents = 13;
@@ -390,7 +389,7 @@ message ListStyleArchive {
   optional .TSP.Color font_color = 21;
   optional bool font_name_null = 22;
   optional string font_name = 23;
-  optional .TSWP.WritingDirectionType writing_direction = 24 [default = kWritingDirectionNatural];
+  optional .TSWP.WritingDirectionType writing_direction = 24;
   repeated bool tiered_numbers = 25;
 }
 
@@ -407,10 +406,10 @@ message ColumnsArchive {
   }
   message NonEqualColumnsArchive {
     message GapWidthArchive {
-      required float gap = 1;
-      required float width = 2;
+      optional float gap = 1;
+      optional float width = 2;
     }
-    required float first = 1;
+    optional float first = 1;
     repeated .TSWP.ColumnsArchive.NonEqualColumnsArchive.GapWidthArchive following = 2;
   }
   optional .TSWP.ColumnsArchive.EqualColumnsArchive equal_columns = 1;
@@ -442,12 +441,12 @@ message ColumnStylePropertiesArchive {
   optional .TSWP.PaddingArchive margins = 9;
   optional bool padding_null = 10;
   optional .TSWP.PaddingArchive padding = 11;
-  optional .TSWP.WritingDirectionType writing_direction = 12 [default = kWritingDirectionNatural];
+  optional .TSWP.WritingDirectionType writing_direction = 12;
 }
 
 message ColumnStyleArchive {
-  required .TSS.StyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSS.StyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSWP.ColumnStylePropertiesArchive column_properties = 11;
 }
 
@@ -471,8 +470,8 @@ message ShapeStylePropertiesArchive {
 }
 
 message ShapeStyleArchive {
-  required .TSD.ShapeStyleArchive super = 1;
-  optional uint32 override_count = 10 [default = 0];
+  optional .TSD.ShapeStyleArchive super = 1;
+  optional uint32 override_count = 10;
   optional .TSWP.ShapeStylePropertiesArchive shape_properties = 11;
 }
 
@@ -484,14 +483,11 @@ message ThemePresetsArchive {
   repeated .TSP.Reference toc_settings_presets = 5;
   repeated .TSP.Reference character_style_presets = 6;
   repeated .TSP.Reference paragraph_style_presets = 7;
-  extend .TSS.ThemeArchive {
-    optional .TSWP.ThemePresetsArchive extension = 110;
-  }
 }
 
 message TextPresetDisplayItemArchive {
-  required .TSP.Reference preset = 1;
-  required string display_name = 2;
+  optional .TSP.Reference preset = 1;
+  optional string display_name = 2;
 }
 
 message TOCEntryStylePropertiesArchive {
@@ -501,7 +497,7 @@ message TOCEntryStylePropertiesArchive {
 }
 
 message TOCEntryStyleArchive {
-  required .TSWP.ParagraphStyleArchive super = 1;
+  optional .TSWP.ParagraphStyleArchive super = 1;
   optional .TSWP.TOCEntryStylePropertiesArchive toc_properties = 2;
 }
 
@@ -517,70 +513,70 @@ message TOCSettingsArchive {
 }
 
 message TOCEntryInstanceArchive {
-  required uint32 paragraph_index = 1;
-  required uint32 page_number = 2;
-  required uint32 number_format = 3;
-  required string heading = 4;
-  required .TSP.Reference indexed_style = 5;
+  optional uint32 paragraph_index = 1;
+  optional uint32 page_number = 2;
+  optional uint32 number_format = 3;
+  optional string heading = 4;
+  optional .TSP.Reference indexed_style = 5;
 }
 
 message UndoTransaction {
   message GenericTransaction {
-    required uint32 value1 = 1;
-    required uint32 value2 = 2;
-    required uint32 value3 = 3;
+    optional uint32 value1 = 1;
+    optional uint32 value2 = 2;
+    optional uint32 value3 = 3;
   }
   message TextTransaction {
-    required uint32 insert_location = 1;
-    required uint32 insert_length = 2;
+    optional uint32 insert_location = 1;
+    optional uint32 insert_length = 2;
     optional string string_to_delete = 3;
   }
   message CharIndexTransaction {
-    required uint32 char_index = 1;
-    required uint32 count = 2;
+    optional uint32 char_index = 1;
+    optional uint32 count = 2;
     optional .TSP.Reference object = 3;
   }
   message ReplaceCharIndexTransaction {
-    required uint32 attribute_index = 1;
-    required uint32 char_index = 2;
+    optional uint32 attribute_index = 1;
+    optional uint32 char_index = 2;
   }
   message AttributeIndexTransaction {
-    required uint32 attribute_index = 1;
-    required uint32 char_index = 2;
+    optional uint32 attribute_index = 1;
+    optional uint32 char_index = 2;
     optional .TSP.Reference object = 3;
     optional string string = 4;
   }
   message InsertAttributeTransaction {
-    required uint32 attribute_index = 1;
-    required uint32 attribute_count = 2;
+    optional uint32 attribute_index = 1;
+    optional uint32 attribute_count = 2;
     optional .TSP.Reference object = 3;
     optional string string = 4;
   }
   message InsertNilTransaction {
-    required uint32 attribute_index = 1;
-    required uint32 attribute_count = 2;
+    optional uint32 attribute_index = 1;
+    optional uint32 attribute_count = 2;
   }
   message CharDeltaTransaction {
-    required uint32 char_index = 1;
-    required uint32 attribute_index = 2;
-    required sint32 char_delta = 3;
+    optional uint32 char_index = 1;
+    optional uint32 attribute_index = 2;
+    optional sint32 char_delta = 3;
   }
   message ParagraphDataTransaction {
-    required uint32 attribute_index = 1;
-    required uint32 first = 2;
-    required uint32 second = 3;
-    required uint32 char_index = 4;
+    optional uint32 attribute_index = 1;
+    optional uint32 first = 2;
+    optional uint32 second = 3;
+    optional uint32 char_index = 4;
   }
   message ObjectDOLCTransaction {
-    required uint32 flags = 1;
+    optional uint32 flags = 1;
     optional .TSP.Reference object = 2;
   }
   message CTDateTransaction {
-    required uint32 attribute_index = 1;
+    optional uint32 attribute_index = 1;
     optional .TSP.Date date = 2;
   }
   message UnionTransaction {
-    required .TSWP.UndoTransaction.UndoKind kind = 1;
+    optional .TSWP.UndoTransaction.UndoKind kind = 1;
     optional uint32 table = 2;
     optional .TSWP.UndoTransaction.GenericTransaction generic = 5;
     optional .TSWP.UndoTransaction.TextTransaction text = 6;
@@ -595,7 +591,7 @@ message UndoTransaction {
     optional .TSWP.UndoTransaction.CTDateTransaction ct_date = 15;
   }
   enum UndoKind {
-    REPLACE_TEXT = 1;
+    REPLACE_TEXT = 0;
     INSERT_ATTRIBUTE = 2;
     DELETE_ATTRIBUTE = 3;
     ADJUST_CHAR_INDEXES = 4;
@@ -610,28 +606,28 @@ message UndoTransaction {
 }
 
 message UndoTransactionWrapperArchive {
-  required .TSWP.UndoTransaction undo_transaction = 1;
+  optional .TSWP.UndoTransaction undo_transaction = 1;
 }
 
 message ShapeInfoArchive {
-  required .TSD.ShapeArchive super = 1;
+  optional .TSD.ShapeArchive super = 1;
   optional .TSP.Reference containedStorage = 2;
 }
 
 message CommentInfoArchive {
-  required .TSWP.ShapeInfoArchive super = 1;
+  optional .TSWP.ShapeInfoArchive super = 1;
   optional .TSP.Reference comment_storage = 2;
 }
 
 message TOCInfoArchive {
-  required .TSWP.ShapeInfoArchive super = 1;
+  optional .TSWP.ShapeInfoArchive super = 1;
   optional .TSP.Reference toc_settings = 2;
   repeated .TSP.Reference toc_entry_data = 3;
   repeated .TSP.Range page_number_ranges = 4;
 }
 
 message TOCLayoutHintArchive {
-  required .TSP.Range charRange = 1;
+  optional .TSP.Range charRange = 1;
 }
 
 message TextualAttachmentArchive {
@@ -662,7 +658,7 @@ message DrawableAttachmentArchive {
 }
 
 message TOCAttachmentArchive {
-  required .TSWP.DrawableAttachmentArchive super = 1;
+  optional .TSWP.DrawableAttachmentArchive super = 1;
 }
 
 message FootnoteReferenceAttachmentArchive {
@@ -790,7 +786,7 @@ message RubyFieldArchive {
 
 message ChangeArchive {
   enum ChangeKind {
-    kChangeKindInsertion = 1;
+    kChangeKindInsertion = 0;
     kChangeKindDeletion = 2;
   }
   optional .TSWP.ChangeArchive.ChangeKind kind = 1;
