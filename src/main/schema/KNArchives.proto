@@ -393,7 +393,7 @@ message RecordingNavigationEventArchive {
 
   optional .TSP.Reference target_slide_node_reference = 1;
   optional uint32 target_event_index = 2;
-  optional .KN.RecordingNavigationEventArchive animation_phase = 3;
+  // optional .KN.RecordingNavigationEventArchive animation_phase = 3;
 }
 
 message RecordingLaserEventArchive {

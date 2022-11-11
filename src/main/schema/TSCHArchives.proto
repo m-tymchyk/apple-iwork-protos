@@ -108,7 +108,7 @@ message ChartSelectionPathArgumentArchive {
 
 message ChartSelectionPathArchive {
   optional .TSCH.ChartSelectionPathTypeArchive path_type = 1;
-  optional .TSCH.ChartSelectionPathArchive sub_selection = 2;
+  // optional .TSCH.ChartSelectionPathArchive sub_selection = 2;
   repeated .TSCH.ChartSelectionPathArgumentArchive arguments = 3;
 }
 
